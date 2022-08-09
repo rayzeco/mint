@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+}
+
+.toast-bar {
+  @media screen and (max-width: 850px) {
+    top: 109px;
+  }
+}
+
+.load-container {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.421);
+}

@@ -1,0 +1,186 @@
+.mint-container {
+  min-height: calc(100vh - 141px);
+  padding: 50px 152px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1282px) {
+    padding: 52px;
+  }
+  @media screen and (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.mint-left-content {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: var(--main-font-size);
+    line-height: var(--main-line-height);
+    margin-bottom: 20px;
+    font-family: "OutfitBold";
+    text-align: left;
+
+    @media screen and (max-width: 768px) {
+      font-size: 48px;
+    }
+  }
+
+  .inner-space-group {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .question {
+      font-weight: bold;
+      font-size: smaller;
+      padding: 16px 0 6px 0;
+    }
+
+    .price {
+      text-align: left;
+      font-size: 24px;
+      font-weight: 900;
+      background-color: #fff5;
+      margin-left: -10px;
+      padding: 4px 10px 6px 10px;
+    }
+
+    p {
+      margin: 0;
+      padding: 6px 0 20px 0;
+      font-size: smaller;
+    }
+
+    h5 {
+      margin: 0;
+      margin-top: 14px;
+    }
+  }
+
+  .mint-cnt-control {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    button {
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      background-color: black;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border: none;
+      outline: none;
+    }
+
+    div {
+      width: 40px;
+      font-size: 28px;
+      font-weight: bold;
+      padding-bottom: 4px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+    font-family: "Outfit";
+
+    max-width: 500px;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  
+  .mint-button {
+    margin: 16px 0px;
+    padding: 8px 64px;
+    border-radius: 40px;
+    font-size: 15px;
+    border: none;
+    outline: none;
+    font-family: "Outfit";
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: var(--secondary-font-size);
+    margin: 0;
+    font-family: "Mono";
+  }
+
+  .sold-label {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    margin: 0;
+    font-family: "Outfit";
+    text-transform: uppercase;
+    
+    @media screen and (max-width: 576px) {
+      font-size: 18px;
+    }
+  }
+}
+
+.mint-right-content {
+  width: 40%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  margin-bottom: 15%;
+
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding-top: 50px;
+  }
+
+  img {
+    height: auto;
+    bottom: 0;
+    border-radius: 28px;
+    position: relative;
+  }
+
+  .img1 {
+    width: 0;
+    flex-grow: 3;
+    transform: rotateZ(10deg);
+    max-width: 300px;
+  }
+
+  .img2 {
+    width: 0;
+    flex-grow: 2;
+    margin-right: -40px;
+    margin-bottom: -40px;
+    transform: rotateZ(-10deg);
+    z-index: 1;
+    max-width: 200px;
+  }
+}

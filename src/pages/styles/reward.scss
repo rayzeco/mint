@@ -1,0 +1,159 @@
+.reward-container {
+  min-height: 100vh;
+  padding-top: 266px;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .arrow {
+    position: absolute;
+    width: 300px;
+    height: 25%;
+    background: linear-gradient(90deg, transparent, var(--theme-color));
+    top: 10%;
+    right: 0;
+    transform: skewY(160deg);
+  }
+
+  .end-arrow {
+    right: 0;
+    top: 0;
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    padding-top: 155px;
+  }
+}
+.reward-header {
+  margin-bottom: 82px;
+  padding: 20px;
+  h1 {
+    font-size: var(--main-font-size);
+    margin: 0;
+    font-family: "OutfitBold";
+    @media screen and (max-width: 768px) {
+      font-size: 64px;
+      text-align: left;
+    }
+  }
+  p {
+    font-size: 24px;
+    margin: 0;
+    margin-top: 20px;
+    font-family: "Outfit";
+    span {
+      font-family: "OutfitBold";
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+      text-align: left;
+    }
+  }
+}
+.reward-content {
+  flex-direction: row;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 830px) {
+    flex-direction: column;
+  }
+  .reward-left,
+  .reward-right {
+    min-height: 522px;
+    height: 100%;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      margin: 0;
+      font-size: var(--main-font-size);
+      line-height: 64px;
+      font-family: "OutfitBold";
+      
+      span {
+        font-family: "Mono";
+      }
+      @media screen and (max-width: 576px) {
+        font-size: 60px;
+      }
+    }
+    p {
+      margin: 15px;
+      font-size: 24px;
+      font-weight: 600;
+      font-family: "Outfit";
+      @media screen and (max-width: 576px) {
+        font-size: 20px;
+      }
+    }
+  }
+  .reward-left {
+    background-color: #08ffb5;
+    button {
+      margin-top: 42px;
+      border-radius: 40px;
+      padding: 17px;
+      min-width: 220px;
+      font-size: 15px;
+      font-family: "Outfit";
+      border: none;
+      cursor: pointer;
+    }
+  }
+  .reward-right {
+    background-color: #d0ff00;
+
+    .control {
+      display: flex;
+      gap: 20px;
+      width: 460px;
+      margin-top: 40px;
+
+      @media screen and (max-width: 576px) {
+        flex-direction: column;
+        width: 90%;
+      }
+    }
+
+    button {
+      width: 0;
+      flex-grow: 1;
+
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+
+      border: none;
+      outline: none;
+      border-radius: 24px;
+      @media screen and (max-width: 576px) {
+        width: 100%;
+        padding: 12px 0;
+      }
+    }
+    input {
+      width: 0;
+      flex-grow: 1;
+
+      padding: 12px 0;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid black;
+
+      outline: none;
+      font-size: 16px;
+      @media screen and (max-width: 576px) {
+        width: 100%;
+      }
+    }
+  }
+}

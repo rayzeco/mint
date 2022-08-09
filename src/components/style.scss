@@ -1,0 +1,84 @@
+:root {
+  --theme-color: #08ffb5;
+}
+
+.faq-container {
+
+  display: flex;
+  padding: 15px;
+
+  &.left {
+    justify-content: flex-end;
+  }
+  &.right {
+    justify-content: flex-start;
+  }
+
+  .faq-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    flex-direction: 1;
+
+    @media screen and (max-width: 1600px) {
+      width: 655px;
+    }
+    @media screen and (max-width: 1400px) {
+      width: 565px;
+    }
+    @media screen and (max-width: 1200px) {
+      width: 475px;
+    }
+    @media screen and (max-width: 992px) {
+      width: 355px;
+    }
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+
+    .faq-header {
+      text-align: left;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        margin: 0;
+        margin-left: 20px;
+        font-family: "OutfitBold";
+        font-size: 24px;
+        font-weight: 600;
+        color: white;
+      }
+      button {
+        margin-left: auto;
+        background: transparent;
+        border: none;
+      }
+      .open-content {
+        text-align: center;
+        // color: #08ffb5;
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s;
+      }
+      .active {
+        transition: all 0.3s;
+        transform: rotate(45deg);
+      }
+    }
+
+    .faq-content {
+      padding-left: 30px;
+      text-align: left;
+      transition: all, 0.4s;
+      p {
+        color: black;
+        font-size: 21px;
+        font-family: "Outfit";
+        font-weight: 400;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
