@@ -14,7 +14,7 @@ const ChickenCard = () => {
         <h1>{`${value.collection.collection} Cards`}</h1>
         <div className="chicken-images">
           <div className="chicken">
-            <p>{`${value.collection.collection}`}</p>
+            <p>{value.collection.collection}</p>
             <img
               src={`./config/${value.collection.sample_img1}`}
               alt="bulk-chicken"
