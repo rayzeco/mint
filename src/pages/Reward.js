@@ -117,11 +117,11 @@ const Reward = () => {
   };
 
   React.useEffect(() => {
-    if (active) {
+    if (active && account) {
       getRewardData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, pathname]);
+  }, [active, account, pathname]);
 
   return (
     <>
