@@ -40,28 +40,33 @@ const Reward = () => {
       const tokenAddress = await nftContract.getRewardToken();
       const balanceAddress = await nftContract.balanceToken();
 
-      const tokenContract = new Contract(
-        tokenAddress,
-        rayzeTokenContractAbi,
-        library.getSigner()
-      );
+      if (tokenAddress !== "0x0000000000000000000000000000000000000000") {
+        const tokenContract = new Contract(
+          tokenAddress,
+          rayzeTokenContractAbi,
+          library.getSigner()
+        );
 
-      const usdcTokenContract = new Contract(
-        balanceAddress,
-        rayzeTokenContractAbi,
-        library.getSigner()
-      );
+        const rewbal = await tokenContract.balanceOf(account); //25
+        const symbol = await tokenContract.symbol(); //$BULLC
 
-      const rewbal = await tokenContract.balanceOf(account); //25
-      const symbol = await tokenContract.symbol(); //$BULLC
-      const bal = await usdcTokenContract.balanceOf(account); //35
-      const rsymbol = await usdcTokenContract.symbol(); //ryzUSDC
+        setRewBalCount(formatUnits(rewbal));
+        setRewBalSymbol(symbol);
+      }
 
-      setRewBalCount(formatUnits(rewbal));
-      setRewBalSymbol(symbol);
+      if (balanceAddress !== "0x0000000000000000000000000000000000000000") {
+        const usdcTokenContract = new Contract(
+          balanceAddress,
+          rayzeTokenContractAbi,
+          library.getSigner()
+        );
 
-      setUsdcCount(formatUnits(bal));
-      setUsdcSymbol(rsymbol);
+        const bal = await usdcTokenContract.balanceOf(account); //35
+        const rsymbol = await usdcTokenContract.symbol(); //ryzUSDC
+
+        setUsdcCount(formatUnits(bal));
+        setUsdcSymbol(rsymbol);
+      }
 
       setIsLoading(false);
     } catch (error) {
@@ -131,50 +136,54 @@ const Reward = () => {
         </div>
       )}
 
-      <div className="reward-container">
-        <div className='arrow'></div>
-        <div className="reward-header">
-          <h1>Your Rewards</h1>
-          <p>
-            The rewards you have earned by being a valued community member of{" "}
-            <span>{`<Bull Chicken>.`}</span>
-          </p>
-        </div>
-        <div className="reward-content">
-          {usdcCount > 0 && (
-            <div className="reward-left">
-              <h1>
-                <span>{rewBalCount}</span> {rewBalSymbol}
-              </h1>
-              <p>Rewards earned</p>
-              {/* <button>Claim</button> */}
-            </div>
-          )}
-          <div className="reward-right">
-            <p>Your USDC Balance</p>
-            <h1>
-              <span>{usdcCount}</span> {usdcSymbol}
-            </h1>
-            <div className="control">
-              <input
-                type="text"
-                value={loadMoreValue}
-                name="bullc"
-                onChange={(e) => {
-                  setLoadMoreValue(e.target.value);
-                }}
-              />
-              <button
-                onClick={() => {
-                  loadMore();
-                }}
-              >
-                Load More
-              </button>
-            </div>
+      {(usdcCount > 0 || usdcSymbol !== "") && (
+        <div className="reward-container">
+          <div className="arrow"></div>
+          <div className="reward-header">
+            <h1>Your Rewards</h1>
+            <p>
+              The rewards you have earned by being a valued community member of{" "}
+              <span>{`<Bull Chicken>.`}</span>
+            </p>
+          </div>
+          <div className="reward-content">
+            {usdcCount > 0 && (
+              <div className="reward-left">
+                <h1>
+                  <span>{rewBalCount}</span> {rewBalSymbol}
+                </h1>
+                <p>Rewards earned</p>
+                {/* <button>Claim</button> */}
+              </div>
+            )}
+            {usdcSymbol !== "" && (
+              <div className="reward-right">
+                <p>Your USDC Balance</p>
+                <h1>
+                  <span>{usdcCount}</span> {usdcSymbol}
+                </h1>
+                <div className="control">
+                  <input
+                    type="text"
+                    value={loadMoreValue}
+                    name="bullc"
+                    onChange={(e) => {
+                      setLoadMoreValue(e.target.value);
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      loadMore();
+                    }}
+                  >
+                    Load More
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
