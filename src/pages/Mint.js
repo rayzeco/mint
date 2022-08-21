@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import { UserContext } from "../App";
 import { useLocation } from "react-router-dom";
 import ReactLoading from "react-loading";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { useEffect } from "react";
 
 const Mint = () => {
   const location = useLocation();
@@ -43,6 +45,17 @@ const Mint = () => {
     }
   };
 
+  const getMintCost = async () => {
+    const provider = new JsonRpcProvider('https://rinkeby.infura.io/v3/c1ba29d27c6b40779d9a00a8850d4f9e')
+    const contract = new Contract(
+      value.collection.ContractAddress,
+      contractABI,
+      provider
+    )
+    let c = await contract.cost()
+    setMintCost(parseInt(c.toString()))
+  }
+
   const getContractValues = async () => {
     try {
       const marketContract = new Contract(
@@ -66,6 +79,12 @@ const Mint = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, pathname]);
 
+  useEffect(() => {
+    if(value.collection.ContractAddress) {
+      getMintCost()
+    }
+  }, [value])
+
   const mintNFT = async () => {
     try {
       setIsLoading(true);
@@ -76,7 +95,7 @@ const Mint = () => {
       );
 
       const res = await marketContract.mint(mintCnt, {
-        value: parseUnits((0.00003 * mintCnt).toString(), "ether"),
+        value: parseUnits((mintCost * mintCnt).toString(), "ether"),
         from: account
       });
       await res.wait();
