@@ -133,7 +133,7 @@ const Mint = () => {
           <p>{value.collection.Description}</p>
           <div className="inner-space-group">
             <div className="question">How many do you with to mint?</div>
-            <span className="price">1 NFT costs 0.03ETH</span >
+            <span className="price">1 NFT costs {mintCost}ETH</span >
             <p>(excluding minting cost)</p>
             <h5>Click mint to purchase your NFT</h5>
             <div className="mint-cnt-control">
