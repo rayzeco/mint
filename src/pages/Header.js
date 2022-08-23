@@ -11,7 +11,6 @@ import { changeNetwork } from "../utils/helper";
 import { DefaultNetwork, RinkebyRPCURL } from "../constant";
 // import { formatEther } from '@ethersproject/units';
 //---------end------------
-import logo from "../asserts/logo.png";
 import "./styles/header.scss";
 import useWindowDimensions from "../utils/helper";
 import { UserContext } from "../App";

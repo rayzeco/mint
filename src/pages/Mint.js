@@ -3,8 +3,9 @@ import "./styles/mint.scss";
 //--------web3--------
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "@ethersproject/contracts";
-import { parseUnits, formatUnits } from "@ethersproject/units";
+import { formatUnits, formatEther } from "@ethersproject/units";
 import { contractABI } from "../constant/simpleNFTAbi";
+import { BigNumber } from "@ethersproject/bignumber";
 //---------End of Web3---------
 import { toast } from "react-toastify";
 import { UserContext } from "../App";
@@ -23,8 +24,8 @@ const Mint = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [mintCnt, setMintCnt] = React.useState(1);
   const [maxMintCnt, setMaxMintCnt] = React.useState(1)
-  const [mintCost, setMintCost] = React.useState(0.03)
-
+  const [mintCost, setMintCost] = React.useState(BigNumber.from('5'))
+  
   const getTotalSupply = async () => {
     try {
       const marketContract = new Contract(
@@ -53,7 +54,7 @@ const Mint = () => {
       provider
     )
     let c = await contract.cost()
-    setMintCost(parseInt(c.toString()))
+    setMintCost(c)
   }
 
   const getContractValues = async () => {
@@ -83,7 +84,7 @@ const Mint = () => {
     if(value.collection.ContractAddress) {
       getMintCost()
     }
-  }, [value])
+  }, [value]) //eslint-disable-line
 
   const mintNFT = async () => {
     try {
@@ -95,7 +96,7 @@ const Mint = () => {
       );
 
       const res = await marketContract.mint(mintCnt, {
-        value: parseUnits((mintCost * mintCnt).toString(), "ether"),
+        value: mintCost.mul(mintCnt).toString(),
         from: account
       });
       await res.wait();
@@ -133,7 +134,7 @@ const Mint = () => {
           <p>{value.collection.Description}</p>
           <div className="inner-space-group">
             <div className="question">How many do you with to mint?</div>
-            <span className="price">1 NFT costs {mintCost}ETH</span >
+            <span className="price">1 NFT costs { formatEther(mintCost) } ETH</span >
             <p>(excluding minting cost)</p>
             <h5>Click mint to purchase your NFT</h5>
             <div className="mint-cnt-control">

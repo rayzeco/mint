@@ -1,5 +1,4 @@
 import * as React from "react";
-import rings from "../asserts/rings.png";
 import "./styles/chicken.scss";
 import { UserContext } from "../App";
 

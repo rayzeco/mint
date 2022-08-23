@@ -1,6 +1,5 @@
 import * as React from "react";
 import "./styles/reward.scss";
-import endArrow from "../asserts/end_arrow.png";
 //--------- Web3 -----------------
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "@ethersproject/contracts";
@@ -14,6 +13,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "../App";
 import { useLocation } from "react-router-dom";
 import ReactLoading from "react-loading";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 const Reward = () => {
   const value = React.useContext(UserContext);
@@ -28,6 +28,12 @@ const Reward = () => {
   const [usdcCount, setUsdcCount] = React.useState(0);
   const [usdcSymbol, setUsdcSymbol] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [tokenAddress, setTokenAddress] = React.useState(
+    "0x0000000000000000000000000000000000000000"
+  );
+  const [balanceAddress, setBalanceAddress] = React.useState(
+    "0x0000000000000000000000000000000000000000"
+  );
 
   const getRewardData = async () => {
     try {
@@ -39,6 +45,8 @@ const Reward = () => {
       );
       const tokenAddress = await nftContract.getRewardToken();
       const balanceAddress = await nftContract.balanceToken();
+      console.log("tokenAddress: ", tokenAddress);
+      console.log("balanceAddress: ", balanceAddress);
 
       if (tokenAddress !== "0x0000000000000000000000000000000000000000") {
         const tokenContract = new Contract(
@@ -121,12 +129,31 @@ const Reward = () => {
     }
   };
 
+  const getAddresses = async () => {
+    if (value.collection.ContractAddress) {
+      const provider = new JsonRpcProvider(
+        "https://rinkeby.infura.io/v3/c1ba29d27c6b40779d9a00a8850d4f9e"
+      );
+      const nftContract = new Contract(
+        value.collection.ContractAddress,
+        contractABI,
+        provider
+      );
+      setTokenAddress(await nftContract.getRewardToken());
+      setBalanceAddress(await nftContract.balanceToken());
+    }
+  };
+
   React.useEffect(() => {
     if (active && account) {
       getRewardData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, account, pathname]);
+
+  React.useEffect(() => {
+    getAddresses();
+  }, [value]); //eslint-disable-line
 
   return (
     <>
@@ -136,54 +163,57 @@ const Reward = () => {
         </div>
       )}
 
-      {(usdcCount > 0 || usdcSymbol !== "") && (
-        <div className="reward-container">
-          <div className="arrow"></div>
-          <div className="reward-header">
-            <h1>Your Rewards</h1>
-            <p>
-              The rewards you have earned by being a valued community member of{" "}
-              <span>{`<Bull Chicken>.`}</span>
-            </p>
-          </div>
-          <div className="reward-content">
-            {usdcCount > 0 && (
-              <div className="reward-left">
-                <h1>
-                  <span>{rewBalCount}</span> {rewBalSymbol}
-                </h1>
-                <p>Rewards earned</p>
-                {/* <button>Claim</button> */}
-              </div>
-            )}
-            {usdcSymbol !== "" && (
-              <div className="reward-right">
-                <p>Your USDC Balance</p>
-                <h1>
-                  <span>{usdcCount}</span> {usdcSymbol}
-                </h1>
-                <div className="control">
-                  <input
-                    type="text"
-                    value={loadMoreValue}
-                    name="bullc"
-                    onChange={(e) => {
-                      setLoadMoreValue(e.target.value);
-                    }}
-                  />
-                  <button
-                    onClick={() => {
-                      loadMore();
-                    }}
-                  >
-                    Load More
-                  </button>
+      {(tokenAddress !== "0x0000000000000000000000000000000000000000" ||
+        balanceAddress !== "0x0000000000000000000000000000000000000000") && (
+          <div className="reward-container">
+            <div className="arrow"></div>
+            <div className="reward-header">
+              <h1>Your Rewards</h1>
+              <p>
+                The rewards you have earned by being a valued community member
+                of <span>{`<Bull Chicken>.`}</span>
+              </p>
+            </div>
+            <div className="reward-content">
+              {tokenAddress !==
+                "0x0000000000000000000000000000000000000000" && (
+                <div className="reward-left">
+                  <h1>
+                    <span>{rewBalCount}</span> {rewBalSymbol}
+                  </h1>
+                  <p>Rewards earned</p>
+                  {/* <button>Claim</button> */}
                 </div>
-              </div>
-            )}
+              )}
+              {balanceAddress !==
+                "0x0000000000000000000000000000000000000000" && (
+                <div className="reward-right">
+                  <p>Your USDC Balance</p>
+                  <h1>
+                    <span>{usdcCount}</span> {usdcSymbol}
+                  </h1>
+                  <div className="control">
+                    <input
+                      type="text"
+                      value={loadMoreValue}
+                      name="bullc"
+                      onChange={(e) => {
+                        setLoadMoreValue(e.target.value);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        loadMore();
+                      }}
+                    >
+                      Load More
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 };

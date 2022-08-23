@@ -1,5 +1,4 @@
 import * as React from "react";
-import arrow from "../asserts/big_arrow.png";
 import "./styles/roadmap.scss";
 import useWindowDimensions from "../utils/helper";
 import { UserContext } from "../App";
